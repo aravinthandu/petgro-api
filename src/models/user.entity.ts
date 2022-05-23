@@ -1,30 +1,47 @@
 
 import {
-    Column,
-    CreateDateColumn,
-    Entity,
-    PrimaryGeneratedColumn,
-  } from 'typeorm';
+  Column,
+  Entity,
+  ManyToMany,
+  OneToMany,
+  CreateDateColumn,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+
+// import { Role } from './role.enum';
 
   @Entity('userDetails')
   export class UserDetailsEntity {
     @PrimaryGeneratedColumn()
     id: number;
   
-    @Column({ default: '' })
-    name: string;
+    @Column()
+    firstName: string;
+  
+    @Column()
+    lastName: string;
 
-    @Column({ default: '' })
+
+    @Column({ unique: true })
     email: string;
 
-    @Column({ default: '' })
-    phone: string;
+    // @Column({ default: '' })
+    // phone: string;
 
-    @Column()
-    isActive: boolean;
+    @Column({ select: false })
+    password: string;
 
-    @Column({ default: '' })
-    accountId: string;
+    // @Column({ nullable: true })
+    // imagePath: string;
+
+    // @Column({ type: 'enum', enum: Role, default: Role.USER })
+    // role: Role;
+
+    // @Column()
+    // isActive: boolean;
+
+    // @Column({ default: '' })
+    // accountId: string;
   
     @CreateDateColumn()
     createdAt: Date;
