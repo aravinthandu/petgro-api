@@ -1,11 +1,9 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
-
 import * as bcrypt from 'bcrypt';
 import { from, Observable, of } from 'rxjs';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
-
 import { UserDetailsEntity } from 'src/models/user.entity';
 import { User } from 'src/models/user.class';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
@@ -16,7 +14,7 @@ export class AuthService {
     @InjectRepository(UserDetailsEntity)
     private readonly userRepository: Repository<UserDetailsEntity>,
     private jwtService: JwtService,
-  ) {}
+  ) { }
 
   hashPassword(password: string): Observable<any> {
     return from(bcrypt.hash(password, 12));
@@ -104,9 +102,6 @@ export class AuthService {
     );
   }
 
-
-
-
   getJwtUser(jwt: string): Observable<User | null> {
     return from(this.jwtService.verifyAsync(jwt)).pipe(
       map(({ user }: { user: User }) => {
@@ -118,19 +113,17 @@ export class AuthService {
     );
   }
 
-    findAllPosts(): Observable<User[]>{
-      return from(this.userRepository.find())
+  findAllPosts(): Observable<User[]> {
+    return from(this.userRepository.find())
   }
 
-updatePost(id:number,UserDetails:User):Observable<UpdateResult>{
-    return from(this.userRepository.update(id,UserDetails));
-}
+  updatePost(id: number, UserDetails: User): Observable<UpdateResult> {
+    return from(this.userRepository.update(id, UserDetails));
+  }
 
-deletePost(id:number):Observable<DeleteResult>{
-  return from(this.userRepository.delete(id));
-}
-
-
+  deletePost(id: number): Observable<DeleteResult> {
+    return from(this.userRepository.delete(id));
+  }
 
 }
 

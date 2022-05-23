@@ -1,5 +1,5 @@
 export interface FeedPost {
-    id?:number;
+    id?: number;
     body?: string;
-    createdAt?:Date;
+    createdAt?: Date;
 }
