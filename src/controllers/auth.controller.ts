@@ -2,14 +2,14 @@ import { Body, Controller, HttpCode, HttpStatus, Post, Get, Put, Delete, Param }
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { User } from '../models/user.class';
-import { AuthService } from 'src/services/auth.service';
+import { AuthService } from '../services/auth.service';
 import { DeleteResult, UpdateResult } from 'typeorm';
 
 @Controller('auth')
 export class AuthController {
     constructor(private authService: AuthService) { }
 
-    @Post()
+    @Post('register')
     register(@Body() user: User): Observable<User> {
         return this.authService.registerAccount(user);
     }

@@ -7,42 +7,43 @@ import {
   CreateDateColumn,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+
 // import { Role } from './role.enum';
 
-@Entity('userDetails')
-export class UserDetailsEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @Entity('userDetails')
+  export class UserDetailsEntity {
+    @PrimaryGeneratedColumn()
+    id: number;
+  
+    @Column()
+    firstName: string;
+  
+    @Column()
+    lastName: string;
 
-  @Column()
-  firstName: string;
 
-  @Column()
-  lastName: string;
+    @Column({ unique: true })
+    email: string;
 
+    // @Column({ default: '' })
+    // phone: string;
 
-  @Column({ unique: true })
-  email: string;
+    @Column({ select: false })
+    password: string;
 
-  // @Column({ default: '' })
-  // phone: string;
+    @Column({ nullable: true })
+    imagePath: string;
 
-  @Column({ select: false })
-  password: string;
+    // @Column({ type: 'enum', enum: Role, default: Role.USER })
+    // role: Role;
 
-  // @Column({ nullable: true })
-  // imagePath: string;
+    // @Column()
+    // isActive: boolean;
 
-  // @Column({ type: 'enum', enum: Role, default: Role.USER })
-  // role: Role;
+    // @Column({ default: '' })
+    // accountId: string;
+  
+    @CreateDateColumn()
+    createdAt: Date;
 
-  // @Column()
-  // isActive: boolean;
-
-  // @Column({ default: '' })
-  // accountId: string;
-
-  @CreateDateColumn()
-  createdAt: Date;
-
-}
+  }
