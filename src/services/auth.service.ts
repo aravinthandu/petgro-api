@@ -32,6 +32,7 @@ export class AuthService {
 
   registerAccount(user: User): Observable<User> {
     const { firstName, lastName, email, password } = user;
+    console.log("user",user)
 
     return this.doesUserExist(email).pipe(
       tap((doesUserExist: boolean) => {
@@ -91,9 +92,11 @@ export class AuthService {
     );
   }
 
+  
 
   login(user: User): Observable<string> {
     const { email, password } = user;
+    console.log(email)
     return this.validateUser(email, password).pipe(
       switchMap((user: User) => {
         if (user) {
@@ -103,6 +106,9 @@ export class AuthService {
       }),
     );
   }
+
+
+
 
   getJwtUser(jwt: string): Observable<User | null> {
     return from(this.jwtService.verifyAsync(jwt)).pipe(
@@ -119,13 +125,14 @@ export class AuthService {
       return from(this.userRepository.find())
   }
 
-updatePost(id:number,UserDetails:User):Observable<UpdateResult>{
-    return from(this.userRepository.update(id,UserDetails));
+updatePost(id:number,users:User):Observable<UpdateResult>{
+    return from(this.userRepository.update(id,users));
 }
 
-deletePost(id:number):Observable<DeleteResult>{
-  return from(this.userRepository.delete(id));
+async deletePost(id:number):Promise<void>{
+  await this.userRepository.delete(id)
 }
+
 
 }
 

@@ -2,48 +2,48 @@
 import {
   Column,
   Entity,
-  ManyToMany,
-  OneToMany,
   CreateDateColumn,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
 // import { Role } from './role.enum';
 
-  @Entity('userDetails')
-  export class UserDetailsEntity {
-    @PrimaryGeneratedColumn()
-    id: number;
-  
-    @Column()
-    firstName: string;
-  
-    @Column()
-    lastName: string;
+@Entity('users')
+export class UserDetailsEntity {
+  @PrimaryGeneratedColumn()
+  id: number;
 
+  @Column({ length: 50 })
+  firstName: string;
 
-    @Column({ unique: true })
-    email: string;
+  @Column({ length: 50 })
+  lastName: string;
 
-    // @Column({ default: '' })
-    // phone: string;
+  @Column({ unique: true })
+  email: string;
 
-    @Column({ select: false })
-    password: string;
+  @Column({ select: false })
+  password: string;
 
-    @Column({ nullable: true })
-    imagePath: string;
+  @Column({ nullable: true })
+  imagePath: string;
 
-    // @Column({ type: 'enum', enum: Role, default: Role.USER })
-    // role: Role;
+  @Column('int')
+  age: number;
 
-    // @Column()
-    // isActive: boolean;
+  @Column()
+  gender: string;
 
-    // @Column({ default: '' })
-    // accountId: string;
-  
-    @CreateDateColumn()
-    createdAt: Date;
+  @Column()
+  state: string;
 
-  }
+  // @Column({ type: 'enum', enum: Role, default: Role.USER })
+  // role: Role;
+
+  @Column({ default: true })
+  isActive: boolean;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+}
