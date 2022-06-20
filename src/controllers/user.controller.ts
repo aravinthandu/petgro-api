@@ -1,63 +1,46 @@
-import {
-    Controller,
-    Post,
-    UploadedFile,
-    UseGuards,
-    UseInterceptors,
-    Request,
-    Get,
-    Res,
-    Param,
-    Put,
-    Body,
-} from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { join } from 'path';
-import { Observable, of } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
-import { JwtGuard } from '../guards/jwt.guard';
-// import {
-//     isFileExtensionSafe,
-//     saveImageToStorage,
-//     removeFile,
-// } from '../helpers/image-stoage';
-import { User } from '../models/user.class';
+import { Body, Controller, HttpCode, HttpStatus, Post, Get, Put, Delete, Param } from '@nestjs/common';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { User} from '../models/user.class';
 import { UserService } from '../services/user.service';
+import { DeleteResult, UpdateResult } from 'typeorm';
+import { API_Path } from 'src/constants/constants';
 
-@Controller('user')
+@Controller(`${API_Path}/user`)
 export class UserController {
-    constructor(private userService: UserService) { 
+    constructor(private userService: UserService) { }
 
-        console.log("hello")
+    @Post('signup')
+    register(@Body() user: User): Observable<User> {
+        return this.userService.registerAccount(user);
     }
 
-    // @UseGuards(JwtGuard)
-    // @Post('upload')
-    // @UseInterceptors(FileInterceptor('file', saveImageToStorage))
-    // uploadImage(
-    //     @UploadedFile() file: Express.Multer.File,
-    //     @Request() req,
-    // ): Observable<{ modifiedFileName: string } | { error: string }> {
-    //     const fileName = file?.filename;
+    @Post('login')
+    @HttpCode(HttpStatus.OK)
+    login(@Body() user: User): Observable<{ token: string }> {
+        return this.userService
+            .login(user)
+            .pipe(map((jwt: string) => ({ token: jwt })));
+    }
 
-    //     if (!fileName) return of({ error: 'File must be a png, jpg/jpeg' });
+    @Get()
+    findAll(): Observable<User[]> {
+        return this.userService.findAllPosts();
+    }
 
-    //     const imagesFolderPath = join(process.cwd(), 'images');
-    //     const fullImagePath = join(imagesFolderPath + '/' + file.filename);
+    @Put(':id')
+    update(
+        @Param('id') id: number,
+        @Body() users: User
+    ): Observable<UpdateResult> {
+        return this.userService.updateUser(id, users)
+    }
 
-    //     return isFileExtensionSafe(fullImagePath).pipe(
-    //         switchMap((isFileLegit: boolean) => {
-    //             if (isFileLegit) {
-    //                 const userId = req.user.id;
-    //                 return this.userService.updateUserImageById(userId, fileName).pipe(
-    //                     map(() => ({
-    //                         modifiedFileName: file.filename,
-    //                     })),
-    //                 );
-    //             }
-    //             removeFile(fullImagePath);
-    //             return of({ error: 'File content does not match extension!' });
-    //         }),
-    //     );
-    // }
+    @Delete(':id')
+    delete(
+        @Param('id') id: number,
+    ): Observable<DeleteResult> {
+        return this.userService.deletePost(id)
+    }
+
 }

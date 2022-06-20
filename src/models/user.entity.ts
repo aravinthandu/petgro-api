@@ -10,7 +10,7 @@ import {
 
 // import { Role } from './role.enum';
 
-  @Entity('userDetails')
+  @Entity('users')
   export class UserDetailsEntity {
     @PrimaryGeneratedColumn()
     id: number;
@@ -33,6 +33,20 @@ import {
 
     @Column({ nullable: true })
     imagePath: string;
+
+    @Column({ nullable: true })
+    age: number;
+    
+
+    @Column({ nullable: true })
+    gender:string;
+
+    @Column({ nullable: true })
+    state:string;
+
+
+    @Column({ nullable: true })
+    parentName:string;
 
     // @Column({ type: 'enum', enum: Role, default: Role.USER })
     // role: Role;
