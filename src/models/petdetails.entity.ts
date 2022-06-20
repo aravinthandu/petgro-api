@@ -1,35 +1,35 @@
 
 import {
-    Column,
-    Entity,
-    CreateDateColumn,
-    PrimaryGeneratedColumn,
-  } from 'typeorm';
-  
-    @Entity('petDetail')
-    export class PetDetailsEntity {
-    
-    @PrimaryGeneratedColumn()
-    id: number;
-      
-      @Column({ unique: true })
-      userId: number;
+  Column,
+  Entity,
+  CreateDateColumn,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
-      @CreateDateColumn()
-      createdAt: Date;
+@Entity('petDetail')
+export class PetDetailsEntity {
 
-      @Column()
-      petName:string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-      @Column()
-      dateOfBirth:string;
+  @Column({ unique: true })
+  userId: number;
 
-      @Column()
-      category:string;
+  @CreateDateColumn()
+  createdAt: Date;
 
-      @Column()
-      breed:string;
+  @Column()
+  petName: string;
 
-      @Column()
-      gender:string;
-    }
+  @Column()
+  dateOfBirth: string;
+
+  @Column()
+  category: string;
+
+  @Column()
+  breed: string;
+
+  @Column()
+  gender: string;
+}
