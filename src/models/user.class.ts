@@ -11,5 +11,8 @@ export class User {
     password?: string;
     imagePath?: string;
     // role?: Role
+    parentName?:string;
+    state?:string;
+    gender?:string;
   }
   

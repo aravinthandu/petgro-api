@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { FeedModule } from './modules/feed.module';
 import { AuthModule } from './modules/auth.module';
+import { PetDetailModule } from './modules/petDetails.module';
 
 @Module({
   imports: [
@@ -20,7 +21,8 @@ import { AuthModule } from './modules/auth.module';
       synchronize: true,
     }),
     FeedModule,
-    AuthModule
+    AuthModule,
+    PetDetailModule
   ],
   controllers: [AppController],
   providers: [AppService],

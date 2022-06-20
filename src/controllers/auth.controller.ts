@@ -1,19 +1,13 @@
-import { Body, Controller, HttpCode, HttpStatus, Post, Get, Put, Delete, Param, Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Body, Controller, HttpCode, HttpStatus, Post, Get, Put, Delete, Param } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { User } from '../models/user.class';
+import { User} from '../models/user.class';
 import { AuthService } from '../services/auth.service';
 import { DeleteResult, UpdateResult } from 'typeorm';
 
-
 @Controller('auth')
 export class AuthController {
-    constructor(
-        @InjectRepository(User)
-        private usersRepository:Repository<User>,
-        private authService: AuthService) { }
+    constructor(private authService: AuthService) { }
 
     @Post('register')
     register(@Body() user: User): Observable<User> {
@@ -38,15 +32,14 @@ export class AuthController {
         @Param('id') id: number,
         @Body() users: User
     ): Observable<UpdateResult> {
-        return this.authService.updatePost(id, users)
+        return this.authService.updateUser(id, users)
     }
 
-    findOne(id:number):Promise<User>{
-        return this.usersRepository.findOne(id);
+    @Delete(':id')
+    delete(
+        @Param('id') id: number,
+    ): Observable<DeleteResult> {
+        return this.authService.deletePost(id)
     }
-
-    async deletePost(id:number):Promise<void>{
-        await this.usersRepository.delete(id)
-      }
 
 }

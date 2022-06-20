@@ -1,0 +1,1 @@
+export const API_Path = "api/v1";

@@ -4,46 +4,32 @@ import {
     Entity,
     CreateDateColumn,
     PrimaryGeneratedColumn,
-    ManyToOne,
-    JoinColumn,
-} from 'typeorm';
-import { UserDetailsEntity } from './user.entity';
-
-@Entity('users')
-export class PetDetailsEntity {
-
+  } from 'typeorm';
+  
+    @Entity('petDetail')
+    export class PetDetailsEntity {
+    
     @PrimaryGeneratedColumn()
     id: number;
+      
+      @Column({ unique: true })
+      userId: number;
 
-    @Column()
-    userId: number;
+      @CreateDateColumn()
+      createdAt: Date;
 
-    @ManyToOne(type => UserDetailsEntity)
-    @JoinColumn({ name: 'userId', referencedColumnName: 'id' })
-    user: UserDetailsEntity;
+      @Column()
+      petName:string;
 
-    @Column()
-    petName: string;
+      @Column()
+      dateOfBirth:string;
 
-    @Column()
-    dateOB: string;
+      @Column()
+      category:string;
 
-    @Column()
-    age: number;
+      @Column()
+      breed:string;
 
-    @Column()
-    category: string;
-
-    @Column()
-    breedName: string;
-
-    @Column()
-    gender: string;
-
-    @Column()
-    location: string;
-
-    @CreateDateColumn()
-    createdAt: Date;
-
-}
+      @Column()
+      gender:string;
+    }

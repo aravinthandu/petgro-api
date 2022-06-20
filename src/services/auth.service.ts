@@ -32,8 +32,6 @@ export class AuthService {
 
   registerAccount(user: User): Observable<User> {
     const { firstName, lastName, email, password } = user;
-    console.log("user",user)
-
     return this.doesUserExist(email).pipe(
       tap((doesUserExist: boolean) => {
         if (doesUserExist)
@@ -64,6 +62,8 @@ export class AuthService {
     );
   }
 
+
+
   validateUser(email: string, password: string): Observable<User> {
     return from(
       this.userRepository.findOne(
@@ -90,13 +90,12 @@ export class AuthService {
         );
       }),
     );
-  }
-
-  
+ }
 
   login(user: User): Observable<string> {
+
     const { email, password } = user;
-    console.log(email)
+    console.log("user",user)
     return this.validateUser(email, password).pipe(
       switchMap((user: User) => {
         if (user) {
@@ -106,9 +105,6 @@ export class AuthService {
       }),
     );
   }
-
-
-
 
   getJwtUser(jwt: string): Observable<User | null> {
     return from(this.jwtService.verifyAsync(jwt)).pipe(
@@ -121,16 +117,20 @@ export class AuthService {
     );
   }
 
-    findAllPosts(): Observable<User[]>{
-      return from(this.userRepository.find())
+  findAllPosts(): Observable<User[]>{
+    return from(this.userRepository.find())
   }
 
 updatePost(id:number,users:User):Observable<UpdateResult>{
     return from(this.userRepository.update(id,users));
 }
 
-async deletePost(id:number):Promise<void>{
-  await this.userRepository.delete(id)
+deletePost(id:number):Observable<DeleteResult>{
+  return from(this.userRepository.delete(id));
+}
+
+updateUser(id:number,user:User):Observable<UpdateResult>{
+  return from(this.userRepository.update(id,user));
 }
 
 

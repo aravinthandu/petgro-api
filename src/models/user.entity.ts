@@ -2,48 +2,62 @@
 import {
   Column,
   Entity,
+  ManyToMany,
+  OneToMany,
   CreateDateColumn,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
 // import { Role } from './role.enum';
 
-@Entity('users')
-export class UserDetailsEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @Entity('users')
+  export class UserDetailsEntity {
+    @PrimaryGeneratedColumn()
+    id: number;
+  
+    @Column()
+    firstName: string;
+  
+    @Column()
+    lastName: string;
 
-  @Column({ length: 50 })
-  firstName: string;
 
-  @Column({ length: 50 })
-  lastName: string;
+    @Column({ unique: true })
+    email: string;
 
-  @Column({ unique: true })
-  email: string;
+    // @Column({ default: '' })
+    // phone: string;
 
-  @Column({ select: false })
-  password: string;
+    @Column({ select: false })
+    password: string;
 
-  @Column({ nullable: true })
-  imagePath: string;
+    @Column({ nullable: true })
+    imagePath: string;
 
-  @Column('int')
-  age: number;
+    @Column({ nullable: true })
+    age: number;
+    
 
-  @Column()
-  gender: string;
+    @Column({ nullable: true })
+    gender:string;
 
-  @Column()
-  state: string;
+    @Column({ nullable: true })
+    state:string;
 
-  // @Column({ type: 'enum', enum: Role, default: Role.USER })
-  // role: Role;
 
-  @Column({ default: true })
-  isActive: boolean;
+    @Column({ nullable: true })
+    parentName:string;
 
-  @CreateDateColumn()
-  createdAt: Date;
+    // @Column({ type: 'enum', enum: Role, default: Role.USER })
+    // role: Role;
 
-}
+    // @Column()
+    // isActive: boolean;
+
+    // @Column({ default: '' })
+    // accountId: string;
+  
+    @CreateDateColumn()
+    createdAt: Date;
+
+  }
